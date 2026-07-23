@@ -1,0 +1,41 @@
+name: "Terraform Module Build"
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  build:
+    if: >-
+      (github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.owner.login == 'sentania-labs') &&
+      github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      with:
+        ref: main
+        fetch-depth: 0
+
+    - name: Bump version and push tag
+      id: tag
+      uses: anothrNick/github-tag-action@4ed44965e0db8dab2b466a16da04aec3cc312fd8 # 1.75.0
+      env:
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        WITH_V: true
+
+    - name: Generate release
+      uses: marvinpinto/action-automatic-releases@d68defdd11f9dcc7f52f35c1b7c236ee7513bcc1 # latest
+      with:
+        automatic_release_tag: ${{ steps.tag.outputs.tag }}
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        prerelease: false
+        draft: false
