@@ -27,6 +27,13 @@ and stores it in a `stringData.user-data` key of a `Secret`. The
 [vm-operator](https://github.com/vmware-tanzu/vm-operator) API types at
 authoring time.
 
+Cloud-init only runs on a guest's first boot, so changing
+`ssh_authorized_keys` or `cloud_init_extra` and re-applying would otherwise
+update only the Secret while the running guest keeps its original bootstrap
+data. The `VirtualMachine` resource uses `replace_triggered_by` against the
+Secret so a change to the generated user-data forces VM replacement instead
+of silently no-op'ing on the guest.
+
 ## `load_balancer_ip` output
 
 `kubernetes_manifest` only surfaces the live object's status

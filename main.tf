@@ -44,6 +44,15 @@ resource "kubernetes_manifest" "this" {
       }
     }
   }
+
+  # Cloud-init only runs on first boot, so changing the Secret's contents alone
+  # would not rebootstrap an already-running guest. Force VM replacement
+  # whenever the generated user-data changes so bootstrap changes actually apply.
+  lifecycle {
+    replace_triggered_by = [
+      kubernetes_manifest.cloud_init
+    ]
+  }
 }
 
 resource "kubernetes_manifest" "service" {
