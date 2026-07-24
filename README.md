@@ -6,14 +6,14 @@ LoadBalancer `VirtualMachineService` (default port 22). Nothing else.
 
 Registry address: `sentania-labs/vm-service/kubernetes`.
 
-## Open item: vmoperator apiVersion
+## vmoperator apiVersion
 
 The `vmoperator.vmware.com` apiVersion used by `VirtualMachine` and
-`VirtualMachineService` is unresolved between `v1alpha2` and `v1alpha3` as of
-authoring. It is exposed as the `vmoperator_api_version` variable with a sane
-default rather than hard-coded; live verification against the target cluster
-(`kubectl api-resources`) happens at Track B checkpoint #1 of the all-apps
-private cloud port. Update the default once confirmed.
+`VirtualMachineService` was resolved via a live checkpoint against the lab
+supervisor on 2026-07-23: `v1alpha5` is preferred and is the default. The
+cluster also still serves `v1alpha1` through `v1alpha4`, so older supervisors
+that don't yet serve `v1alpha5` can override the `vmoperator_api_version`
+variable to pin an earlier version.
 
 ## Cloud-init bootstrap Secret
 
@@ -81,7 +81,7 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Supervisor namespace to create the VM Service objects in. | `string` | n/a | yes |
 | <a name="input_ssh_authorized_keys"></a> [ssh\_authorized\_keys](#input\_ssh\_authorized\_keys) | Public keys to authorize for the guest's default user via cloud-init. | `list(string)` | n/a | yes |
 | <a name="input_storage_class"></a> [storage\_class](#input\_storage\_class) | Name of the StorageClass to use (VirtualMachine spec.storageClass). | `string` | n/a | yes |
-| <a name="input_vmoperator_api_version"></a> [vmoperator\_api\_version](#input\_vmoperator\_api\_version) | apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects (unresolved: v1alpha2 vs v1alpha3 as of authoring; verify against the target cluster with `kubectl api-resources` before relying on the default). | `string` | `"vmoperator.vmware.com/v1alpha2"` | no |
+| <a name="input_vmoperator_api_version"></a> [vmoperator\_api\_version](#input\_vmoperator\_api\_version) | apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects. v1alpha5 is preferred and is the default; older supervisors that don't yet serve v1alpha5 can override this variable with v1alpha1 through v1alpha4, which are also still served. | `string` | `"vmoperator.vmware.com/v1alpha5"` | no |
 
 ## Outputs
 
