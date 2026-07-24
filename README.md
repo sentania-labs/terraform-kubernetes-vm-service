@@ -81,7 +81,7 @@ No modules.
 | <a name="input_namespace"></a> [namespace](#input\_namespace) | Supervisor namespace to create the VM Service objects in. | `string` | n/a | yes |
 | <a name="input_ssh_authorized_keys"></a> [ssh\_authorized\_keys](#input\_ssh\_authorized\_keys) | Public keys to authorize for the guest's default user via cloud-init. | `list(string)` | n/a | yes |
 | <a name="input_storage_class"></a> [storage\_class](#input\_storage\_class) | Name of the StorageClass to use (VirtualMachine spec.storageClass). | `string` | n/a | yes |
-| <a name="input_vmoperator_api_version"></a> [vmoperator\_api\_version](#input\_vmoperator\_api\_version) | apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects (unresolved: v1alpha2 vs v1alpha3 as of authoring; verify against the target cluster with `kubectl api-resources` before relying on the default). | `string` | `"vmoperator.vmware.com/v1alpha2"` | no |
+| <a name="input_vmoperator_api_version"></a> [vmoperator\_api\_version](#input\_vmoperator\_api\_version) | apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects. v1alpha5 is preferred and is the default; older supervisors that don't yet serve v1alpha5 can override this variable with v1alpha1 through v1alpha4, which are also still served. | `string` | `"vmoperator.vmware.com/v1alpha5"` | no |
 
 ## Outputs
 
