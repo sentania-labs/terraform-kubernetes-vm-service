@@ -51,6 +51,6 @@ variable "expose_ports" {
 
 variable "vmoperator_api_version" {
   type        = string
-  description = "apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects (unresolved: v1alpha2 vs v1alpha3 as of authoring; verify against the target cluster with `kubectl api-resources` before relying on the default)."
-  default     = "vmoperator.vmware.com/v1alpha2"
+  description = "apiVersion for vmoperator.vmware.com VirtualMachine/VirtualMachineService objects. v1alpha5 is preferred and is the default; older supervisors that don't yet serve v1alpha5 can override this variable with v1alpha1 through v1alpha4, which are also still served."
+  default     = "vmoperator.vmware.com/v1alpha5"
 }

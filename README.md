@@ -6,14 +6,14 @@ LoadBalancer `VirtualMachineService` (default port 22). Nothing else.
 
 Registry address: `sentania-labs/vm-service/kubernetes`.
 
-## Open item: vmoperator apiVersion
+## vmoperator apiVersion
 
 The `vmoperator.vmware.com` apiVersion used by `VirtualMachine` and
-`VirtualMachineService` is unresolved between `v1alpha2` and `v1alpha3` as of
-authoring. It is exposed as the `vmoperator_api_version` variable with a sane
-default rather than hard-coded; live verification against the target cluster
-(`kubectl api-resources`) happens at Track B checkpoint #1 of the all-apps
-private cloud port. Update the default once confirmed.
+`VirtualMachineService` was resolved via a live checkpoint against the lab
+supervisor on 2026-07-23: `v1alpha5` is preferred and is the default. The
+cluster also still serves `v1alpha1` through `v1alpha4`, so older supervisors
+that don't yet serve `v1alpha5` can override the `vmoperator_api_version`
+variable to pin an earlier version.
 
 ## Cloud-init bootstrap Secret
 
